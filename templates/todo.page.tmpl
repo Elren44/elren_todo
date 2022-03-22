@@ -1,0 +1,46 @@
+{{ template "base" .}}
+
+{{define "title"}}
+    {{.Title}}
+{{end}}
+
+{{define "css"}}
+    <link rel="stylesheet" href="/static/css/style.css">
+{{end}}
+
+{{define "content"}}
+    <div class="btn">
+        <a href="/" class="btn_link"><- Назад</a>
+    </div>
+    <div class="todo">
+        <div class="todo_header"><h2>Список дел:</h2></div>
+        <div class="todo_tasks">
+            <button class= "toggle_btn" >Открыть список</button>
+            <ul class="showTasks">
+
+                {{ range .Tasks }}
+                <li class="showTasks_item task">
+                    <div class="div">
+                        <div class="task_name task_item">
+                            Название: {{ .Title }}.
+                        </div>
+                        <div class="task_desc task_item">
+                            Описаниe: {{ .Description }}.
+                        </div>
+                        <div class="task_date task_item">
+                            Дата: {{ .FormattedDate }}
+                        </div>
+                    </div>
+                </li>
+                {{ end }}
+            </ul>
+        </div>
+
+
+    </div>
+{{end}}
+
+{{define "js"}}
+    <script src="/static/js/todo.js"></script>
+    <script src="/static/js/script.js"></script>
+{{end}}

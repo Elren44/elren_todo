@@ -1,0 +1,23 @@
+{{template "base" .}}
+
+{{define "title"}}
+{{ .Title }}
+{{end}}
+
+{{define "css"}}
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/reg.css">
+{{end}}
+
+{{define "content"}}
+    <div class="reg_done">
+        <h2>Спасибо за регистрацию!</h2>
+        <div class="reg_done__btn">
+            <a href="/login" class="btn">Войти на сайт.</a>
+        </div>
+    </div>
+{{end}}
+
+{{define "js"}}
+<script src="/static/js/script.js"></script>
+{{end}}

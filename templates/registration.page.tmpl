@@ -1,0 +1,112 @@
+{{template "base" .}}
+
+{{define "title"}}
+{{ .Title }}
+{{end}}
+
+{{define "css"}}
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/reg.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/>
+{{end}}
+
+{{define "content"}}
+    <div class="regform">
+        <div class="regform_body container">
+
+<!--            <h2 class="regform_title">Регистрация</h2>-->
+            <form action="/signup" method="POST" class="regform_form" id="form">
+                <input type="hidden" name="csrf_token" value="{{ .SCRFToken }}">
+                <div class="title">Регистрация</div>
+
+                <!-- Email input -->
+                <div>
+                    <label for="email">Email</label>
+                    <i class="far fa-envelope"></i>
+
+                    <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="abc@gmail.com"
+                            autocomplete="off"
+                            required
+                    />
+
+                    <i class="fas fa-exclamation-circle failure-icon"></i>
+                    <i class="far fa-check-circle success-icon"></i>
+
+                    <div class="error"></div>
+
+                </div>
+
+                <!--   Password input -->
+
+                <div>
+                    <label for="password">Пароль</label>
+                    <i class="fas fa-lock"></i>
+
+                    <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            placeholder="Введите пароль"
+                            autocomplete="off"
+                            required
+                    />
+
+                    <i class="fas fa-exclamation-circle failure-icon"></i>
+                    <i class="far fa-check-circle success-icon"></i>
+
+                    <div class="error"></div>
+
+                </div>
+
+                <!--   Password2 input -->
+
+                <div>
+                    <label for="password2">Повтор пароля</label>
+                    <i class="fas fa-lock"></i>
+
+                    <input
+                            type="password"
+                            name="password2"
+                            id="password2"
+                            placeholder="Повторите пароль"
+                            autocomplete="off"
+                            required
+                    />
+
+                    <i class="fas fa-exclamation-circle failure-icon"></i>
+                    <i class="far fa-check-circle success-icon"></i>
+
+                    <div class="error"></div>
+
+                </div>
+
+                <button id="btn" class="btn" type="submit">Продолжить</button>
+
+
+            </form>
+
+        </div>
+
+        {{ if .ExistUser}}
+        <div class="regform_existuser">
+            <p>Пользователь с таким email уже существует</p>
+        </div>
+        {{ end }}
+        <div>
+            {{if ne (index .StringMap "message") ""}}
+                Message is - {{index .StringMap "message"}}
+            {{else}}
+                I don`t find message, please visit <a href="/">Главная страница</a> for getting message
+            {{end}}
+        </div>
+    </div>
+{{end}}
+
+{{define "js"}}
+<script src="/static/js/script.js"></script>
+<script src="/static/js/auth.js"></script>
+{{end}}
