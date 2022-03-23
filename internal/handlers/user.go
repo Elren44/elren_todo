@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/Elren44/elren_todo/internal/config"
@@ -35,12 +34,12 @@ func (ah *UserHandler) Register(router *mux.Router) {
 	router.HandleFunc("/signup", ah.PostSignupHandler).Methods(http.MethodPost)
 	router.HandleFunc("/registered", ah.Registered).Methods(http.MethodGet)
 	router.HandleFunc("/login", ah.LoginHandler).Methods(http.MethodGet)
+	router.HandleFunc("/login", ah.PostLoginHandler).Methods(http.MethodPost)
 
 }
 
 func (ah *UserHandler) PostSignupHandler(w http.ResponseWriter, r *http.Request) {
 	var user model.User
-	fmt.Println("some")
 	var data = model.TemplateData{
 		Title:     "Registration",
 		ExistUser: false,
@@ -67,12 +66,12 @@ func (ah *UserHandler) PostSignupHandler(w http.ResponseWriter, r *http.Request)
 			ah.logger.Info(user)
 
 			http.Redirect(w, r, "/registered", http.StatusMovedPermanently)
-
-			err = utils.RenderTemplate(w, r, "registered.page.tmpl", &data)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				ah.logger.Fatalf("failed to execute html: %v", err)
-			}
+			//
+			//err = utils.RenderTemplate(w, r, "registered.page.tmpl", &data)
+			//if err != nil {
+			//	http.Error(w, err.Error(), http.StatusInternalServerError)
+			//	ah.logger.Fatalf("failed to execute html: %v", err)
+			//}
 		}
 	}
 }
@@ -103,6 +102,12 @@ func verifyFormEmpty(r *http.Request) bool {
 	}
 	return true
 }
+func verifyLoginFormEmpty(r *http.Request) bool {
+	if r.FormValue("email") == "" || r.FormValue("password") == "" {
+		return false
+	}
+	return true
+}
 
 func (ah *UserHandler) Registered(w http.ResponseWriter, r *http.Request) {
 
@@ -119,12 +124,32 @@ func (ah *UserHandler) Registered(w http.ResponseWriter, r *http.Request) {
 
 func (ah *UserHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	data := model.TemplateData{
-		Title: "Login",
+		Title:     "Login",
+		ExistUser: true,
 	}
 
 	err := utils.RenderTemplate(w, r, "login.page.tmpl", &data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		ah.logger.Fatalf("failed to execute html: %v", err)
+	}
+}
+
+func (ah *UserHandler) PostLoginHandler(w http.ResponseWriter, r *http.Request) {
+	var user model.User
+	var data = model.TemplateData{
+		Title:     "Login",
+		ExistUser: false,
+	}
+
+	if verifyLoginFormEmpty(r) {
+		user.Email = r.Form.Get("email")
+		user.Password = r.Form.Get("password")
+		ah.logger.Infof("search user with email - %s and password - %s", user.Email, user.Password)
+		err := utils.RenderTemplate(w, r, "index.page.tmpl", &data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ah.logger.Fatalf("failed to execute html: %v", err)
+		}
 	}
 }

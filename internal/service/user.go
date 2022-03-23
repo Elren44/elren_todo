@@ -43,9 +43,9 @@ func (us *UserService) CreateUser(ctx context.Context, user model.User) (string,
 	return us.repository.CreateUser(ctx, user)
 }
 
-func (us *UserService) GetOneUser(ctx context.Context, email string, password string) (model.User, error) {
+func (us *UserService) GetOneUser(ctx context.Context, user model.User) (model.User, error) {
 
-	user, err := us.repository.GetOneUser(ctx, email)
+	user, err := us.repository.GetOneUser(ctx, user.Email)
 	if err != nil {
 		return user, err
 	}
