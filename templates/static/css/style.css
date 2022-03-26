@@ -43,7 +43,7 @@ body {
 .navbar_item {
   padding-top: 40px;
   padding-bottom: 40px;
-  margin-right: max(calc(7vw + 10px));
+  margin-right: max(7vw + 10px);
 }
 .navbar_item a {
   padding: 20px 20px;
@@ -144,6 +144,4 @@ body {
 }
 .task_item {
   margin-bottom: 30px;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

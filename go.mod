@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/Elren44/elog v1.0.5
 	github.com/alexedwards/scs/v2 v2.5.0
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/gorilla/mux v1.8.0
 	github.com/ilyakaznacheev/cleanenv v1.2.6
 	github.com/jackc/pgconn v1.11.0

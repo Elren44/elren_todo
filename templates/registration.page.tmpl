@@ -14,6 +14,7 @@
     <div class="regform">
         <div class="regform_body container">
 
+            {{$userData := index .Data "user_data"}}
             <form action="/signup" method="POST" class="regform_form" id="form">
                 <input type="hidden" name="csrf_token" value="{{ .SCRFToken }}">
                 <div class="title">Регистрация</div>
@@ -21,6 +22,10 @@
                 <!-- Email input -->
                 <div>
                     <label for="email">Email</label>
+                    {{with .Form.Errors.Get "email"}}
+                        <label class="error">{{.}}</label>
+                    {{end}}
+                    <label class="error"></label>
                     <i class="far fa-envelope"></i>
 
                     <input
@@ -29,13 +34,13 @@
                             id="email"
                             placeholder="abc@gmail.com"
                             autocomplete="off"
-                            required
+                            value="{{$userData.Email}}"
+                            {{with .Form.Errors.Get "email"}} style="border: 2px solid red;" {{end}}
                     />
 
-                    <i class="fas fa-exclamation-circle failure-icon"></i>
+                    <i class="fas fa-exclamation-circle failure-icon " {{with .Form.Errors.Get "email"}} style="opacity: 1;" {{end}}></i>
                     <i class="far fa-check-circle success-icon"></i>
 
-                    <div class="error"></div>
 
                 </div>
 
@@ -43,6 +48,10 @@
 
                 <div>
                     <label for="password">Пароль</label>
+                    {{with .Form.Errors.Get "password"}}
+                        <label class="error">{{.}}</label>
+                    {{end}}
+                    <label class="error"></label>
                     <i class="fas fa-lock"></i>
 
                     <input
@@ -51,13 +60,12 @@
                             id="password"
                             placeholder="Введите пароль"
                             autocomplete="off"
-                            required
+                            value="{{$userData.Password}}"
+                            {{with .Form.Errors.Get "password"}} style="border: 2px solid red;" {{end}}
                     />
 
-                    <i class="fas fa-exclamation-circle failure-icon"></i>
+                    <i class="fas fa-exclamation-circle failure-icon" {{with .Form.Errors.Get "password"}} style="opacity: 1;" {{end}}></i>
                     <i class="far fa-check-circle success-icon"></i>
-
-                    <div class="error"></div>
 
                 </div>
 
@@ -65,6 +73,10 @@
 
                 <div>
                     <label for="password2">Повтор пароля</label>
+                    {{with .Form.Errors.Get "password2"}}
+                        <label class="error">{{.}}</label>
+                    {{end}}
+                    <label class="error"></label>
                     <i class="fas fa-lock"></i>
 
                     <input
@@ -73,13 +85,12 @@
                             id="password2"
                             placeholder="Повторите пароль"
                             autocomplete="off"
-                            required
+                            value="{{$userData.Password2}}"
+                            {{with .Form.Errors.Get "password2"}} style="border: 2px solid red;" {{end}}
                     />
 
-                    <i class="fas fa-exclamation-circle failure-icon"></i>
+                    <i class="fas fa-exclamation-circle failure-icon" {{with .Form.Errors.Get "password2"}} style="opacity: 1;" {{end}}></i>
                     <i class="far fa-check-circle success-icon"></i>
-
-                    <div class="error"></div>
 
                 </div>
 
@@ -90,18 +101,13 @@
 
         </div>
 
-        {{ if .ExistUser}}
-        <div class="regform_existuser">
-            <p>Пользователь с таким email уже существует</p>
-        </div>
-        {{ end }}
-        <div>
+        <!-- <div>
             {{if ne (index .StringMap "message") ""}}
                 Message is - {{index .StringMap "message"}}
             {{else}}
                 I don`t find message, please visit <a href="/">Главная страница</a> for getting message
             {{end}}
-        </div>
+        </div> -->
     </div>
 {{end}}
 

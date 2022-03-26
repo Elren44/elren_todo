@@ -17,10 +17,10 @@ let
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    engine(email, 0, "Email не может быть пустым");
-    engine(password, 1, "Password не может быть пустым");
-    engine(password2, 2, "Password не может быть пустым");
-    checkPasswordMatch(2, "Пароли не совпадают!")
+    engine(email, 0, "Это поле не может быть пустым");
+    engine(password, 1, "Это поле не может быть пустым");
+    engine(password2, 2, "Это поле не может быть пустым");
+    checkPasswordMatch(2, "Пароли не совпадают!");
     if (valid == 4) {
         form.submit();
     }

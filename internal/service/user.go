@@ -32,11 +32,13 @@ func NewUserService(logger *zap.SugaredLogger, repository UserStorage) *UserServ
 	}
 }
 
-func (us *UserService) CreateUser(ctx context.Context, user model.User) (string, error) {
-	user.EncryptedPassword = generatePasswordHash(user.Password)
+func (us *UserService) CreateUser(ctx context.Context, userDTO model.UserDTO) (string, error) {
+	var user model.User
+	user.Email = userDTO.Email
+	user.Password = userDTO.Password
+	user.EncryptedPassword = generatePasswordHash(userDTO.Password)
 	_, err := us.repository.GetOneUser(ctx, user.Email)
 	if err == nil {
-		//us.logger.Errorf("user with this email already exists: %v", err)
 		return "", errors.New("user exists")
 	}
 

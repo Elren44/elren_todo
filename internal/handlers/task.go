@@ -44,7 +44,7 @@ func (th *TaskHandler) CreateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (th *TaskHandler) IndexHandler(w http.ResponseWriter, r *http.Request) {
-	th.config.Session.Put(r.Context(), "message", "user exist")
+	//th.config.Session.Put(r.Context(), "message", "user exist")
 
 	err := utils.RenderTemplate(w, r, "index.page.tmpl", &model.TemplateData{
 		Title: "index page",
