@@ -9,4 +9,7 @@ type TemplateData struct {
 	StringMap map[string]string
 	Form      *forms.Form
 	Data      map[string]interface{}
+	Flash     string
+	Warning   string
+	Error     string
 }

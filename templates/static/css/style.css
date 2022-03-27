@@ -64,21 +64,6 @@ body {
   margin-left: 5vw;
 }
 
-/*
-.btn {
-    padding: 10px 15px;
-    border-radius: 10px;
-    transition: box-shadow .3s ease;
-    background-color: $base_accent;
-    color: $base_hover;
-    transition: padding .3s ease;
-    display: inline;
-    &:hover {
-        box-shadow: inset 0px 0px 15px #fdcbc6;
-        padding: 10px 20px 10px 20px;
-    }
-}
-*/
 .btn {
   display: inline;
   height: 45px;

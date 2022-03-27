@@ -92,7 +92,9 @@ func (ah *UserHandler) PostSignupHandler(w http.ResponseWriter, r *http.Request)
 	} else {
 		ah.logger.Info(userData)
 
-		http.Redirect(w, r, "/registered", http.StatusMovedPermanently)
+		ah.config.Session.Put(r.Context(), "user_data", userData)
+
+		http.Redirect(w, r, "/registered", http.StatusSeeOther)
 	}
 
 }
@@ -129,12 +131,24 @@ func verifyLoginFormEmpty(r *http.Request) bool {
 }
 
 func (ah *UserHandler) Registered(w http.ResponseWriter, r *http.Request) {
-
-	data := model.TemplateData{
-		Title: "Registered",
+	userData, ok := ah.config.Session.Get(r.Context(), "user_data").(model.UserDTO)
+	if !ok {
+		ah.logger.Info("cannot get item from session")
+		ah.config.Session.Put(r.Context(), "error", "Can`t get user_data from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
 	}
 
-	err := utils.RenderTemplate(w, r, "registered.page.tmpl", &data)
+	ah.config.Session.Remove(r.Context(), "user_data")
+
+	data := make(map[string]interface{})
+
+	data["user_data"] = userData
+
+	err := utils.RenderTemplate(w, r, "registered.page.tmpl", &model.TemplateData{
+		Data:  data,
+		Title: "Registered",
+	})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		ah.logger.Fatalf("failed to execute html: %v", err)

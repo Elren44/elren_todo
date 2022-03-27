@@ -5,9 +5,9 @@
 {{end}}
 
 {{define "css"}}
-<link rel="stylesheet" href="/static/css/style.css">
-<link rel="stylesheet" href="/static/css/reg.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/css/reg.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"/>
 {{end}}
 
 {{define "content"}}
@@ -35,6 +35,7 @@
                             placeholder="abc@gmail.com"
                             autocomplete="off"
                             value="{{$userData.Email}}"
+                            required
                             {{with .Form.Errors.Get "email"}} style="border: 2px solid red;" {{end}}
                     />
 
@@ -61,6 +62,7 @@
                             placeholder="Введите пароль"
                             autocomplete="off"
                             value="{{$userData.Password}}"
+                            required
                             {{with .Form.Errors.Get "password"}} style="border: 2px solid red;" {{end}}
                     />
 
@@ -86,6 +88,7 @@
                             placeholder="Повторите пароль"
                             autocomplete="off"
                             value="{{$userData.Password2}}"
+                            required
                             {{with .Form.Errors.Get "password2"}} style="border: 2px solid red;" {{end}}
                     />
 

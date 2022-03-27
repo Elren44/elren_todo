@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/gob"
 	"errors"
 	"fmt"
 	"net"
@@ -11,6 +12,7 @@ import (
 	"time"
 
 	"github.com/Elren44/elren_todo/internal/composites"
+	"github.com/Elren44/elren_todo/internal/model"
 	"github.com/Elren44/elren_todo/pkg/middleware"
 	"github.com/Elren44/elren_todo/pkg/sessions"
 	"github.com/gorilla/mux"
@@ -24,6 +26,8 @@ import (
 )
 
 func main() {
+	gob.Register(model.UserDTO{})
+
 	session := sessions.NewSessions()
 	//send session to middleware
 	middleware.SendSessions(session)

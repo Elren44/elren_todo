@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>
 
@@ -16,24 +16,20 @@
         {{ block "css" .}}
 
         {{ end }}
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+        <style>
+            .notie-container {
+                box-shadow: none;
+            }
+            .notie-textbox-inner {
+                color: #faffff;
+            }
+        </style>
     </head>
     <body>
         <div class="body_wrapper">
             {{template "navbar"}}
-            <!-- <header>
-                <nav class="navbar">
-                    <ul class="navbar_list">
-                        <li class="navbar_item navbar_home active"><a href="/">Главная</a></li>
-                        <li class="navbar_item navbar_todo"><a href="/todo">Задачи</a></li>
-                        <li class="navbar_item"><a href="#">Контакты</a></li>
-            
-                    </ul>
-                    <ul class="navbar_auth">
-                        <li class="navbar_item navbar_login"><a href="/login">Вход</a></li>
-                        <li class="navbar_item navbar_signup"><a href="/signup">Регистрация</a></li>
-                    </ul>
-                </nav>
-            </header> -->
+
             {{ block "content" .}}
 
             {{ end }}
@@ -44,6 +40,31 @@
         {{ block "js" .}}
 
         {{ end }}
+
+        <script src="https://unpkg.com/notie"></script>
+        <script>
+
+            function notify(msg, msgType) {
+                notie.alert({
+                type: msgType,
+                text: msg,
+                })
+            }
+
+            {{with .Error}}
+                notify("{{.}}", "error")
+            {{end}}
+
+            {{with .Flash}}
+                notify("{{.}}", "success")
+            {{end}}
+
+            {{with .Warning}}
+                notify("{{.}}", "warning")
+            {{end}}
+
+
+        </script>
     </body>
     </html>
 
