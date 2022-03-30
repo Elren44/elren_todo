@@ -2,6 +2,7 @@ package config
 
 import (
 	"html/template"
+	"os"
 	"sync"
 
 	"github.com/alexedwards/scs/v2"
@@ -29,21 +30,24 @@ type StorageConfig struct {
 	Password string `yaml:"password"`
 }
 
-var conf *Config
-var once sync.Once
-
 func GetConfig() *Config {
-	once.Do(func() {
-		logger := elog.InitLogger(elog.JsonOutput)
+	var conf *Config
+	var once sync.Once
+	cfgPath, ok := os.LookupEnv("CONF_PATH")
+	if ok {
+		once.Do(func() {
+			logger := elog.InitLogger(elog.JsonOutput)
 
-		logger.Info("read configuration application")
-		conf = &Config{}
-		if err := cleanenv.ReadConfig("config.yml", conf); err != nil {
-			help, _ := cleanenv.GetDescription(conf, nil)
-			logger.Info(help)
-			logger.Fatal(err)
-		}
+			logger.Info("read configuration application")
+			conf = &Config{}
+			if err := cleanenv.ReadConfig(cfgPath, conf); err != nil {
+				help, _ := cleanenv.GetDescription(conf, nil)
+				logger.Info(help)
+				logger.Fatal(err)
+			}
 
-	})
+		})
+	}
+
 	return conf
 }
